@@ -1,0 +1,75 @@
+# ============================================
+# APPLICATION CONFIGURATION TEMPLATE
+# ============================================
+# Copy this file to 'application.properties' and fill in your values
+# Do NOT commit application.properties (it contains sensitive data)
+
+# ===========================
+# APPLICATION
+# ===========================
+spring.application.name=backend
+server.port=8080
+
+# ===========================
+# DATABASE - PostgreSQL
+# ===========================
+spring.datasource.url=jdbc:postgresql://localhost:5432/vanguard_db
+spring.datasource.username=YOUR_DB_USERNAME
+spring.datasource.password=YOUR_DB_PASSWORD
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# ===========================
+# NEO4J GRAPH DATABASE
+# ===========================
+spring.neo4j.uri=bolt://localhost:7687
+spring.neo4j.authentication.username=neo4j
+spring.neo4j.authentication.password=YOUR_NEO4J_PASSWORD
+
+# ===========================
+# KAFKA
+# ===========================
+spring.kafka.bootstrap-servers=localhost:9092
+spring.kafka.consumer.group-id=vanguard-group
+spring.kafka.consumer.auto-offset-reset=earliest
+
+# ===========================
+# SECURITY - JWT
+# ===========================
+jwt.secret=YOUR_JWT_SECRET_KEY_HERE_AT_LEAST_256_BITS
+jwt.expiration=86400000
+
+# ===========================
+# AI / LLM
+# ===========================
+# OpenAI
+spring.ai.openai.api-key=YOUR_OPENAI_API_KEY
+spring.ai.openai.chat.options.model=gpt-4-turbo-preview
+spring.ai.openai.chat.options.temperature=0.7
+
+# Ollama (Local LLM)
+spring.ai.ollama.base-url=http://localhost:11434
+spring.ai.ollama.chat.options.model=llama2
+
+# ===========================
+# ACTUATOR & MONITORING
+# ===========================
+management.endpoints.web.exposure.include=health,prometheus,metrics,info
+management.endpoint.health.show-details=when-authorized
+management.metrics.export.prometheus.enabled=true
+
+# ===========================
+# RESILIENCE4J
+# ===========================
+resilience4j.circuitbreaker.instances.default.sliding-window-size=10
+resilience4j.circuitbreaker.instances.default.minimum-number-of-calls=5
+resilience4j.circuitbreaker.instances.default.failure-rate-threshold=50
+
+# ===========================
+# LOGGING
+# ===========================
+logging.level.root=INFO
+logging.level.org.example.backend=DEBUG
+logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+

@@ -1,0 +1,112 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+description = 'backend'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+    springAiVersion = '1.0.0-M5'
+    resilience4jVersion = '2.2.0'
+    testcontainersVersion = '1.20.4'
+}
+
+dependencies {
+
+    /* =========================
+       CORE SPRING
+       ========================= */
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    /* =========================
+       SECURITY (JWT + RBAC)
+       ========================= */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
+    /* =========================
+       RELATIONAL DATABASE (POSTGRES)
+       ========================= */
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    /* =========================
+       GRAPH DATABASE (NEO4J)
+       ========================= */
+    implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+
+    /* =========================
+       EVENT STREAMING (KAFKA)
+       ========================= */
+    implementation 'org.springframework.kafka:spring-kafka'
+
+    /* =========================
+       AI / LLM INTEGRATION
+       ========================= */
+    implementation platform("org.springframework.ai:spring-ai-bom:${springAiVersion}")
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+    implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter'
+
+    /* =========================
+       OBSERVABILITY & MONITORING
+       ========================= */
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    /* =========================
+       API DOCUMENTATION (SWAGGER)
+       ========================= */
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+    /* =========================
+       RESILIENCE (CIRCUIT BREAKERS)
+       ========================= */
+    implementation "io.github.resilience4j:resilience4j-spring-boot3:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-circuitbreaker:${resilience4jVersion}"
+    implementation "io.github.resilience4j:resilience4j-retry:${resilience4jVersion}"
+
+    /* =========================
+       UTILITIES
+       ========================= */
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.apache.commons:commons-lang3'
+
+    /* =========================
+       DEVELOPER EXPERIENCE
+       ========================= */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    /* =========================
+       TESTING (ENTERPRISE GRADE)
+       ========================= */
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation platform("org.testcontainers:testcontainers-bom:${testcontainersVersion}")
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.testcontainers:neo4j'
+    testImplementation 'org.testcontainers:kafka'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

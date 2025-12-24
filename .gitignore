@@ -1,0 +1,241 @@
+# ============================================
+# VANGUARD RESILIENCE ENGINE - ROOT GITIGNORE
+# ============================================
+
+# ===========================
+# SENSITIVE & SECRETS
+# ===========================
+*.env
+.env
+.env.*
+!.env.example
+**/application.properties
+**/application-*.properties
+!**/application.properties.example
+secrets/
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+.secrets/
+
+# ===========================
+# JAVA / GRADLE (Backend)
+# ===========================
+backend/.gradle/
+backend/build/
+backend/bin/
+backend/out/
+backend/.gradle-cache/
+backend/gradle-app.setting
+backend/!gradle-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.hprof
+
+# Spring Boot
+backend/HELP.md
+backend/target/
+
+# ===========================
+# INTELLIJ IDEA
+# ===========================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.idea_modules/
+
+# ===========================
+# ECLIPSE
+# ===========================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+.metadata/
+
+# ===========================
+# VS CODE
+# ===========================
+.vscode/
+*.code-workspace
+.history/
+
+# ===========================
+# NODE / NPM (Frontend)
+# ===========================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/.nuxt/
+frontend/.cache/
+frontend/.parcel-cache/
+frontend/.vite/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/.pnpm-store/
+frontend/.turbo/
+frontend/.vercel/
+frontend/.DS_Store
+
+# ===========================
+# PYTHON (ML Service)
+# ===========================
+ml_service/__pycache__/
+ml_service/*.py[cod]
+ml_service/*$py.class
+ml_service/.pytest_cache/
+ml_service/.venv/
+ml_service/venv/
+ml_service/env/
+ml_service/ENV/
+ml_service/.ipynb_checkpoints/
+ml_service/*.egg-info/
+ml_service/dist/
+ml_service/build/
+ml_service/.mypy_cache/
+ml_service/.coverage
+ml_service/htmlcov/
+ml_service/*.db
+ml_service/*.sqlite3
+
+# ML Models & Data
+ml_service/models/*.h5
+ml_service/models/*.pkl
+ml_service/models/*.pt
+ml_service/models/*.pth
+ml_service/data/raw/
+ml_service/data/processed/
+ml_service/wandb/
+ml_service/mlruns/
+
+# ===========================
+# INFRASTRUCTURE
+# ===========================
+infra/.terraform/
+infra/*.tfstate
+infra/*.tfstate.*
+infra/*.tfvars
+infra/.terraform.lock.hcl
+infra/crash.log
+infra/crash.*.log
+infra/override.tf
+infra/override.tf.json
+infra/*_override.tf
+infra/*_override.tf.json
+
+# Kubernetes
+infra/**/*-secret.yaml
+infra/**/*-secrets.yaml
+
+# ===========================
+# DOCKER
+# ===========================
+.dockerignore
+docker-compose.override.yml
+
+# ===========================
+# DATABASES
+# ===========================
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+pgdata/
+neo4j/data/
+postgres_data/
+
+# ===========================
+# LOGS & TEMP FILES
+# ===========================
+*.log
+logs/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===========================
+# MONITORING & OBSERVABILITY
+# ===========================
+prometheus_data/
+grafana_data/
+*.hprof
+
+# ===========================
+# BUILD & DISTRIBUTION
+# ===========================
+dist/
+build/
+target/
+*.zip
+*.tar.gz
+*.rar
+
+# ===========================
+# PACKAGE MANAGERS
+# ===========================
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.npm/
+.eslintcache
+
+# ===========================
+# TESTING
+# ===========================
+coverage/
+*.cover
+.nyc_output/
+test-results/
+junit.xml
+
+# ===========================
+# OS SPECIFIC
+# ===========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ===========================
+# MISC
+# ===========================
+*.bak
+*.backup
+*.orig
+*.rej
+.cache/
+
