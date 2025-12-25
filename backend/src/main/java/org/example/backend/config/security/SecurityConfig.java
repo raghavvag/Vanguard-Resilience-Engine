@@ -22,13 +22,11 @@ public class SecurityConfig {
 
 
 
-                .authorizeHttpRequests(auth->auth
-                        .requestMatchers("/acutator/**").permitAll()
-                        .requestMatchers(".health/**").permitAll()
-                        .anyRequest().authenticated()
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/actuator/**").permitAll()
+                .anyRequest().authenticated()
+        );
 
-
-                );
         return http.build();
     }
 }
