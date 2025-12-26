@@ -24,7 +24,9 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/**").permitAll()
-                .anyRequest().authenticated()
+                        .requestMatchers("/auth/signup").permitAll()
+
+                        .anyRequest().authenticated()
         );
 
         return http.build();
