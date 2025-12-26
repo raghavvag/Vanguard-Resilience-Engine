@@ -1,23 +1,26 @@
 package org.example.backend.auth.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.example.backend.auth.dto.LoginRequest;
+import org.example.backend.auth.dto.LoginResponse;
 import org.example.backend.auth.dto.SignupRequest;
 import org.example.backend.auth.dto.SignupResponse;
 import org.example.backend.auth.entity.User;
 import org.example.backend.auth.entity.enums.UserRole;
 import org.example.backend.auth.service.UserService;
 import org.example.backend.common.response.ApiResponse;
+import org.example.backend.security.jwt.JwtTokenProvider;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/signup")
     public ApiResponse<SignupResponse> signup(
@@ -38,4 +41,18 @@ public class AuthController {
 
         return ApiResponse.success(response);
     }
+    @PostMapping("/login")
+    public ApiResponse<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request) {
+
+        User user = userService.authenticate(
+                request.getEmail(),
+                request.getPassword()
+        );
+
+        String token = jwtTokenProvider.generateToken(user);
+
+        return ApiResponse.success(new LoginResponse(token));
+    }
+
 }

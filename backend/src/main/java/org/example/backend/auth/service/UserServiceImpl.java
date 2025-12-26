@@ -42,4 +42,23 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found"));
     }
+
+    @Override
+    public User authenticate(String email, String rawPassword) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new BadRequestException("Invalid credentials"));
+
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            throw new BadRequestException("Invalid credentials");
+        }
+
+        if (!user.isEnabled()) {
+            throw new BadRequestException("User is disabled");
+        }
+
+        return user;
+    }
+
 }
