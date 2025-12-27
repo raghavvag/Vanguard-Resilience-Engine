@@ -1,30 +1,54 @@
 package org.example.backend.domain.supplier.controller;
 
 import org.example.backend.common.response.ApiResponse;
+import org.example.backend.domain.supplier.entity.Supplier;
+import org.example.backend.domain.supplier.service.SupplierService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/suppliers")
 public class SupplierController {
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin-only")
-    public ApiResponse<String> adminEndpoint() {
-        return ApiResponse.success("Admin access granted");
+    private final SupplierService supplierService;
+
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'OPS_MANAGER')")
-    @GetMapping("/ops")
-    public ApiResponse<String> opsEndpoint() {
-        return ApiResponse.success("Ops access granted");
+    @PostMapping
+    public ApiResponse<Supplier> createSupplier(
+            @RequestParam String name,
+            @RequestParam String country) {
+
+        return ApiResponse.success(
+                supplierService.create(name, country)
+        );
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'OPS_MANAGER', 'SME_USER')")
-    @GetMapping("/view")
-    public ApiResponse<String> viewEndpoint() {
-        return ApiResponse.success("View access granted");
+    @GetMapping("/{id}")
+    public ApiResponse<Supplier> getSupplier(@PathVariable Long id) {
+        return ApiResponse.success(
+                supplierService.getById(id)
+        );
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPS_MANAGER')")
+    @GetMapping
+    public ApiResponse<List<Supplier>> getAllSuppliers() {
+        return ApiResponse.success(
+                supplierService.getAll()
+        );
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deactivateSupplier(@PathVariable Long id) {
+        supplierService.deactivate(id);
+        return ApiResponse.success(null);
     }
 }
