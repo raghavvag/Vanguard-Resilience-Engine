@@ -7,7 +7,7 @@ import org.example.backend.common.exception.ResourceNotFoundException;
 import org.example.backend.domain.product.entity.Product;
 import org.example.backend.domain.product.repository.ProductRepository;
 import org.example.backend.domain.supplier.entity.Supplier;
-import org.example.backend.domain.supplier.repository.SupplierRespository;
+import org.example.backend.domain.supplier.repository.SupplierRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
-    private final SupplierRespository supplierRepository;
+    private final SupplierRepository supplierRepository;
 
     @Override
     public Product create(String name, String sku, Long supplierId) {
