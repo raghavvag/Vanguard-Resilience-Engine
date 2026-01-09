@@ -1,6 +1,7 @@
 package org.example.backend.graph.service;
 
 import org.example.backend.graph.model.ImpactedProduct;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class ImpactAnalysisGraphServiceImpl implements ImpactAnalysisGraphServic
     }
 
     @Override
+    @Cacheable(value = "supplierImpact", key = "#supplierId")
     public List<ImpactedProduct> findImpactedProducts(Long supplierId) {
 
         return (List<ImpactedProduct>) neo4jClient.query("""
